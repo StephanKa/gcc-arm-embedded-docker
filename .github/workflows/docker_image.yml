@@ -1,0 +1,29 @@
+name: Docker Image CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build ARM GCC Toolchain 06-2017-q2-update
+      run: docker build . --file 06-2017-q2-update/Dockerfile
+    - name: Build ARM GCC Toolchain 7-2017-q4-major
+      run: docker build . --file 7-2017-q4-major/Dockerfile
+    - name: Build ARM GCC Toolchain 7-2018-q2-update
+      run: docker build . --file 7-2018-q2-update/Dockerfile
+    - name: Build ARM GCC Toolchain 8-2018-q4-major
+      run: docker build . --file 8-2018-q4-major/Dockerfile
+    - name: Build ARM GCC Toolchain 8-2019-q3-update
+      run: docker build . --file 8-2019-q3-update/Dockerfile
+    - name: Build ARM GCC Toolchain 9-2019-q4-major
+      run: docker build . --file 9-2019-q4-major/Dockerfile
+    - name: Build ARM GCC Toolchain 9-2020-q2-update
+      run: docker build . --file 9-2020-q2-update/Dockerfile
+    - name: Build ARM GCC Toolchain 10.3-2021.07
+      run: docker build . --file 10.3-2021.07/Dockerfile
+    - name: Build ARM GCC Toolchain 10.3-2021.10
+      run: docker build . --file 10.3-2021.10/Dockerfile
+    - name: Build ARM GCC Toolchain 10-2020-q4-major
+      run: docker build . --file 10-2020-q4-major/Dockerfile

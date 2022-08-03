@@ -3,23 +3,6 @@ This Docker contains tools for cross-compilation to ARM as well as the gcc [tool
 
 ## Example
 
-### Gitlab CI
-`.gitlab-ci.yml`
-```yml
-image: "hardwario/gcc-arm-embedded:8-2018-q4-major"
-
-build:
-  stage: build
-
-  script:
-    - make
-
-  artifacts:
-    paths:
-      - "*.bin"
-    expire_in: 30 days
-```
-
 ### Local
 ```
 git clone --recursive https://github.com/bigclownlabs/bcf-radio-climate-monitor.git
@@ -28,6 +11,26 @@ docker run --rm -it -v `pwd`:/builds -u `id -u`:`id -g` hardwario/gcc-arm-embedd
 ```
 
 ## Tag
+
+### 10.3-2021.10 (October 21, 2021)
+`gcc-arm-none-eabi-9-2019-q4-major-x86_64-linux.tar.bz2`
+* Linux x86_64 Tarball
+* MD5: 2383e4eb4ea23f248d33adc70dc3227e
+
+### 10.3-2021.07 (July 29, 2021)
+`gcc-arm-none-eabi-9-2019-q4-major-x86_64-linux.tar.bz2`
+* Linux x86_64 Tarball
+* MD5: b56ae639d9183c340f065ae114a30202
+
+### 10-2020-q4-major (December 11, 2020)
+`gcc-arm-none-eabi-9-2019-q4-major-x86_64-linux.tar.bz2`
+* Linux x86_64 Tarball
+* MD5: 8312c4c91799885f222f663fc81f9a31
+
+### 9-2020-q2-update (June 30, 2020)
+`gcc-arm-none-eabi-9-2019-q4-major-x86_64-linux.tar.bz2`
+* Linux x86_64 Tarball
+* MD5: 2b9eeccc33470f9d3cda26983b9d2dc6
 
 ### 9-2019-q4-major (November 06, 2019)
 `gcc-arm-none-eabi-9-2019-q4-major-x86_64-linux.tar.bz2`
@@ -70,3 +73,4 @@ docker run --rm -it -v `pwd`:/builds -u `id -u`:`id -g` hardwario/gcc-arm-embedd
 * graphviz
 * python3
 * python3-pip
+* ninja

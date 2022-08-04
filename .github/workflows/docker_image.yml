@@ -8,22 +8,22 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build ARM GCC Toolchain 6-2017-q2-update
-      run: docker build . --file 6-2017-q2-update/Dockerfile
+      run: docker build . --file 6-2017-q2-update/Dockerfile -t gcc-arm-6-2017-q2-update
     - name: Build ARM GCC Toolchain 7-2017-q4-major
-      run: docker build . --file 7-2017-q4-major/Dockerfile
+      run: docker build . --file 7-2017-q4-major/Dockerfile -t gcc-arm-7-2017-q4-major
     - name: Build ARM GCC Toolchain 7-2018-q2-update
-      run: docker build . --file 7-2018-q2-update/Dockerfile
+      run: docker build . --file 7-2018-q2-update/Dockerfile -t gcc-arm-7-2018-q2-update
     - name: Build ARM GCC Toolchain 8-2018-q4-major
-      run: docker build . --file 8-2018-q4-major/Dockerfile
+      run: docker build . --file 8-2018-q4-major/Dockerfile -t gcc-arm-8-2018-q4-major
     - name: Build ARM GCC Toolchain 8-2019-q3-update
-      run: docker build . --file 8-2019-q3-update/Dockerfile
+      run: docker build . --file 8-2019-q3-update/Dockerfile -t gcc-arm-8-2019-q3-update
     - name: Build ARM GCC Toolchain 9-2019-q4-major
-      run: docker build . --file 9-2019-q4-major/Dockerfile
+      run: docker build . --file 9-2019-q4-major/Dockerfile -t gcc-arm-9-2019-q4-major
     - name: Build ARM GCC Toolchain 9-2020-q2-update
-      run: docker build . --file 9-2020-q2-update/Dockerfile
+      run: docker build . --file 9-2020-q2-update/Dockerfile -t gcc-arm-9-2020-q2-update
     - name: Build ARM GCC Toolchain 10.3-2021.07
-      run: docker build . --file 10.3-2021.07/Dockerfile
+      run: docker build . --file 10.3-2021.07/Dockerfile -t gcc-arm-10.3-2021.07
     - name: Build ARM GCC Toolchain 10.3-2021.10
-      run: docker build . --file 10.3-2021.10/Dockerfile
+      run: docker build . --file 10.3-2021.10/Dockerfile -t gcc-arm-10.3-2021.10
     - name: Build ARM GCC Toolchain 10-2020-q4-major
-      run: docker build . --file 10-2020-q4-major/Dockerfile
+      run: docker build . --file 10-2020-q4-major/Dockerfile -t gcc-arm-10-2020-q4-major

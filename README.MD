@@ -13,22 +13,22 @@ docker run --rm -it -v `pwd`:/builds -u `id -u`:`id -g` hardwario/gcc-arm-embedd
 ## Tag
 
 ### 10.3-2021.10 (October 21, 2021)
-`gcc-arm-none-eabi-9-2019-q4-major-x86_64-linux.tar.bz2`
+`gcc-arm-none-eabi-10.3-2021.07-x86_64-linux.tar.bz2`
 * Linux x86_64 Tarball
 * MD5: 2383e4eb4ea23f248d33adc70dc3227e
 
 ### 10.3-2021.07 (July 29, 2021)
-`gcc-arm-none-eabi-9-2019-q4-major-x86_64-linux.tar.bz2`
+`gcc-arm-none-eabi-10.3-2021.10-x86_64-linux.tar.bz2`
 * Linux x86_64 Tarball
 * MD5: b56ae639d9183c340f065ae114a30202
 
 ### 10-2020-q4-major (December 11, 2020)
-`gcc-arm-none-eabi-9-2019-q4-major-x86_64-linux.tar.bz2`
+`gcc-arm-none-eabi-10-2020-q4-major-x86_64-linux.tar.bz2`
 * Linux x86_64 Tarball
 * MD5: 8312c4c91799885f222f663fc81f9a31
 
 ### 9-2020-q2-update (June 30, 2020)
-`gcc-arm-none-eabi-9-2019-q4-major-x86_64-linux.tar.bz2`
+`gcc-arm-none-eabi-9-2020-q2-update-x86_64-linux.tar.bz2`
 * Linux x86_64 Tarball
 * MD5: 2b9eeccc33470f9d3cda26983b9d2dc6
 
@@ -73,4 +73,4 @@ docker run --rm -it -v `pwd`:/builds -u `id -u`:`id -g` hardwario/gcc-arm-embedd
 * graphviz
 * python3
 * python3-pip
-* ninja
+* ninja-build

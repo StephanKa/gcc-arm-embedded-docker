@@ -6,7 +6,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Build ARM GCC Toolchain 6-2017-q2-update
       run: docker build . --file 6-2017-q2-update/Dockerfile -t gcc-arm-embedded-6-2017-q2-update
     - name: Build ARM GCC Toolchain 7-2017-q4-major

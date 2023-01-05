@@ -29,3 +29,5 @@ jobs:
       run: docker build . --file 10-2020-q4-major/Dockerfile -t gcc-arm-embedded-10-2020-q4-major
     - name: Build ARM GCC Toolchain 11.3.Rel1
       run: docker build . --file 11.3.Rel1/Dockerfile -t gcc-arm-embedded-11-3-rel1
+    - name: Build ARM GCC Toolchain 12.2.Rel1
+      run: docker build . --file 12.2.Rel1/Dockerfile -t gcc-arm-embedded-12-2-rel1

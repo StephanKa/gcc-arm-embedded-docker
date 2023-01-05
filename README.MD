@@ -12,11 +12,17 @@ docker run --rm -it -v `pwd`:/builds -u `id -u`:`id -g` gcc-arm-embedded:latest 
 
 ## Tag
 
+### 12.2.Rel1 (December 22, 2022)
+`arm-gnu-toolchain-12.2.rel1-x86_64-arm-none-eabi.tar.xz`
+* GCC 12.2
+* Linux x86_64 Tarball
+* SHA256: 84be93d0f9e96a15addd490b6e237f588c641c8afdf90e7610a628007fc96867
+
 ### 11.3.Rel1 (August 08, 2022)
 `arm-gnu-toolchain-11.3.rel1-x86_64-arm-none-eabi.tar.xz`
 * GCC 11.3
 * Linux x86_64 Tarball
-* MD5: 6a798cd1fb8995c5bd25545045b9c157
+* SHA256: d420d87f68615d9163b99bbb62fe69e85132dc0a8cd69fca04e813597fe06121
 
 ### Old deprecated releases
 

@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   linux:
-    name: GCC ARM Toolchain ${{ matrix.compiler.name }}
+    name: GCC ARM Toolchain ${{ matrix.compiler.name }} - ${{ matrix.build }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false  # 'false' means Don't stop matrix workflows even if some matrix entry fails.
@@ -20,19 +20,14 @@ jobs:
                    {name: '10.3-2021.10'},
                    {name: '11.3.rel1'},
                    {name: '12.2.rel1'}]
+        build: ['debug', 'release']
     steps:
     - uses: actions/checkout@v3
     - name: Build ARM GCC Toolchain ${{ matrix.compiler.name }} Docker
       run: docker build . --file ${{ matrix.compiler.name }}/Dockerfile -t gcc-arm-embedded-${{ matrix.compiler.name }}
 
-    - name: Configure debug example with GCC Toolchain ${{ matrix.compiler.name }} Docker
-      run: docker run -v ${PWD}/example:/builds gcc-arm-embedded-${{ matrix.compiler.name }} cmake --preset debug
+    - name: Configure ${{ matrix.build }} example with GCC Toolchain ${{ matrix.compiler.name }} Docker
+      run: docker run -v ${PWD}/example:/builds gcc-arm-embedded-${{ matrix.compiler.name }} cmake --preset ${{ matrix.build }}
 
-    - name: Build debug example with GCC Toolchain ${{ matrix.compiler.name }} Docker
-      run: docker run -v ${PWD}/example:/builds gcc-arm-embedded-${{ matrix.compiler.name }} cmake --build --preset debug
-
-    - name: Configure release example with GCC Toolchain ${{ matrix.compiler.name }} Docker
-      run: docker run -v ${PWD}/example:/builds gcc-arm-embedded-${{ matrix.compiler.name }} cmake --preset debug
-
-    - name: Build release example with GCC Toolchain ${{ matrix.compiler.name }} Docker
-      run: docker run -v ${PWD}/example:/builds gcc-arm-embedded-${{ matrix.compiler.name }} cmake --build --preset release
+    - name: Build ${{ matrix.build }} example with GCC Toolchain ${{ matrix.compiler.name }} Docker
+      run: docker run -v ${PWD}/example:/builds gcc-arm-embedded-${{ matrix.compiler.name }} cmake --build --preset ${{ matrix.build }}

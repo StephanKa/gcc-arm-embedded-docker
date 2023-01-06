@@ -1,4 +1,7 @@
 # Overview
+
+[![Docker Image CI](https://github.com/StephanKa/gcc-arm-embedded-docker/actions/workflows/docker_image.yml/badge.svg)](https://github.com/StephanKa/gcc-arm-embedded-docker/actions/workflows/docker_image.yml)
+
 This Docker contains tools for cross-compilation to ARM as well as the gcc [toolchain](https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads) and cmake. 
 
 ## Example

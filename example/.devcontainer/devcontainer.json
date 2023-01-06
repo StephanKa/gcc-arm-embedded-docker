@@ -1,0 +1,12 @@
+// For format details, see https://aka.ms/vscode-remote/devcontainer.json
+{
+    "image": "arm-none-eabi-gcc:latest",
+
+    "extensions": [
+        "ms-vscode.cpptools",
+        "ms-vscode.cmake-tools",
+        "marus25.cortex-debug"
+    ],
+    "remoteUser": "vscode",
+    "postCreateCommand": "git submodule update --recursive --init"
+}

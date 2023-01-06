@@ -5,9 +5,8 @@ This Docker contains tools for cross-compilation to ARM as well as the gcc [tool
 
 ### Local
 ```
-git clone --recursive https://github.com/bigclownlabs/bcf-radio-climate-monitor.git
-cd bcf-radio-climate-monitor
-docker run --rm -it -v `pwd`:/builds -u `id -u`:`id -g` gcc-arm-embedded:latest make
+docker run --rm -v `pwd`/example:/builds gcc-arm-embedded-12-2-rel1 cmake --preset debug
+docker run --rm -v `pwd`/example:/builds gcc-arm-embedded-12-2-rel1 cmake --build --preset debug
 ```
 
 ## Tag

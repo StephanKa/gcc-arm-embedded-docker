@@ -3,7 +3,8 @@ name: Docker Image CI
 on: [push]
 
 jobs:
-  build:
+  linux:
+    name: GCC ARM Toolchain ${{ matrix.compiler.name }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false  # 'false' means Don't stop matrix workflows even if some matrix entry fails.
@@ -25,13 +26,13 @@ jobs:
       run: docker build . --file ${{ matrix.compiler.name }}/Dockerfile -t gcc-arm-embedded-${{ matrix.compiler.name }}
 
     - name: Configure debug example with GCC Toolchain ${{ matrix.compiler.name }} Docker
-      run: docker run -v ${PWD}/example:/builds ${{ matrix.compiler.name }} cmake --preset debug
+      run: docker run -v ${PWD}/example:/builds gcc-arm-embedded-${{ matrix.compiler.name }} cmake --preset debug
 
     - name: Build debug example with GCC Toolchain ${{ matrix.compiler.name }} Docker
-      run: docker run -v ${PWD}/example:/builds ${{ matrix.compiler.name }} cmake --build --preset debug
+      run: docker run -v ${PWD}/example:/builds gcc-arm-embedded-${{ matrix.compiler.name }} cmake --build --preset debug
 
     - name: Configure release example with GCC Toolchain ${{ matrix.compiler.name }} Docker
-      run: docker run -v ${PWD}/example:/builds ${{ matrix.compiler.name }} cmake --preset debug
+      run: docker run -v ${PWD}/example:/builds gcc-arm-embedded-${{ matrix.compiler.name }} cmake --preset debug
 
     - name: Build release example with GCC Toolchain ${{ matrix.compiler.name }} Docker
-      run: docker run -v ${PWD}/example:/builds ${{ matrix.compiler.name }} cmake --build --preset release
+      run: docker run -v ${PWD}/example:/builds gcc-arm-embedded-${{ matrix.compiler.name }} cmake --build --preset release

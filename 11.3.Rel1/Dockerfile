@@ -12,6 +12,6 @@ RUN mkdir /builds && \
     apt-get autoremove -y && \
     apt-get clean
 
-ENV PATH=/opt/arm-gnu-toolchain-11.3.rel1-x86_64-arm-none-linux-gnueabihf/bin:$PATH
+ENV PATH=/opt/arm-gnu-toolchain-11.3.rel1-x86_64-arm-none-eabi/bin:$PATH
 
 WORKDIR /builds

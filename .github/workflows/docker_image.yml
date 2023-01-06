@@ -5,29 +5,33 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false  # 'false' means Don't stop matrix workflows even if some matrix entry fails.
+      matrix:
+        compiler: [{name: '6-2017-q2-update'},
+                   {name: '7-2017-q4-major'},
+                   {name: '7-2018-q2-update'},
+                   {name: '8-2018-q4-major'},
+                   {name: '8-2019-q3-update'},
+                   {name: '9-2019-q4-major'},
+                   {name: '9-2020-q2-update'},
+                   {name: '10.3-2021.07'},
+                   {name: '10.3-2021.10'},
+                   {name: '11.3.Rel1'},
+                   {name: '12.2.Rel1'}]
     steps:
     - uses: actions/checkout@v3
-    - name: Build ARM GCC Toolchain 6-2017-q2-update
-      run: docker build . --file 6-2017-q2-update/Dockerfile -t gcc-arm-embedded-6-2017-q2-update
-    - name: Build ARM GCC Toolchain 7-2017-q4-major
-      run: docker build . --file 7-2017-q4-major/Dockerfile -t gcc-arm-embedded-7-2017-q4-major
-    - name: Build ARM GCC Toolchain 7-2018-q2-update
-      run: docker build . --file 7-2018-q2-update/Dockerfile -t gcc-arm-embedded-7-2018-q2-update
-    - name: Build ARM GCC Toolchain 8-2018-q4-major
-      run: docker build . --file 8-2018-q4-major/Dockerfile -t gcc-arm-embedded-8-2018-q4-major
-    - name: Build ARM GCC Toolchain 8-2019-q3-update
-      run: docker build . --file 8-2019-q3-update/Dockerfile -t gcc-arm-embedded-8-2019-q3-update
-    - name: Build ARM GCC Toolchain 9-2019-q4-major
-      run: docker build . --file 9-2019-q4-major/Dockerfile -t gcc-arm-embedded-9-2019-q4-major
-    - name: Build ARM GCC Toolchain 9-2020-q2-update
-      run: docker build . --file 9-2020-q2-update/Dockerfile -t gcc-arm-embedded-9-2020-q2-update
-    - name: Build ARM GCC Toolchain 10.3-2021.07
-      run: docker build . --file 10.3-2021.07/Dockerfile -t gcc-arm-embedded-10.3-2021.07
-    - name: Build ARM GCC Toolchain 10.3-2021.10
-      run: docker build . --file 10.3-2021.10/Dockerfile -t gcc-arm-embedded-10.3-2021.10
-    - name: Build ARM GCC Toolchain 10-2020-q4-major
-      run: docker build . --file 10-2020-q4-major/Dockerfile -t gcc-arm-embedded-10-2020-q4-major
-    - name: Build ARM GCC Toolchain 11.3.Rel1
-      run: docker build . --file 11.3.Rel1/Dockerfile -t gcc-arm-embedded-11-3-rel1
-    - name: Build ARM GCC Toolchain 12.2.Rel1
-      run: docker build . --file 12.2.Rel1/Dockerfile -t gcc-arm-embedded-12-2-rel1
+    - name: Build ARM GCC Toolchain ${{ matrix.compiler.name }} Docker
+      run: docker build . --file ${{ matrix.compiler.name }}/Dockerfile -t gcc-arm-embedded-${{ matrix.compiler.name }}
+
+    - name: Configure debug example with GCC Toolchain ${{ matrix.compiler.name }} Docker
+      run: docker run -v ${PWD}/example:/builds -it ${{ matrix.compiler.name }} cmake --preset debug
+
+    - name: Build debug example with GCC Toolchain ${{ matrix.compiler.name }} Docker
+      run: docker run -v ${PWD}/example:/builds -it ${{ matrix.compiler.name }} cmake --build --preset debug
+
+    - name: Configure release example with GCC Toolchain ${{ matrix.compiler.name }} Docker
+      run: docker run -v ${PWD}/example:/builds -it ${{ matrix.compiler.name }} cmake --preset debug
+
+    - name: Build release example with GCC Toolchain ${{ matrix.compiler.name }} Docker
+      run: docker run -v ${PWD}/example:/builds -it ${{ matrix.compiler.name }} cmake --build --preset release

@@ -8,8 +8,9 @@ This Docker contains tools for cross-compilation to ARM as well as the gcc [tool
 
 ### Local
 ```
-docker run --rm -v `pwd`/example:/builds gcc-arm-embedded-12-2-rel1 cmake --preset debug
-docker run --rm -v `pwd`/example:/builds gcc-arm-embedded-12-2-rel1 cmake --build --preset debug
+docker build . --file 12-2-rel1/Dockerfile -t gcc-arm-embedded:latest -t gcc-arm-embedded:12-2-rel1
+docker run --rm -v `pwd`/example:/builds gcc-arm-embedded cmake --preset debug
+docker run --rm -v `pwd`/example:/builds gcc-arm-embedded cmake --build --preset debug
 ```
 
 ## Tag

@@ -24,10 +24,10 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build ARM GCC Toolchain ${{ matrix.compiler.name }} Docker
-      run: docker build . --file ${{ matrix.compiler.name }}/Dockerfile -t gcc-arm-embedded-${{ matrix.compiler.name }}
+      run: docker build . --file ${{ matrix.compiler.name }}/Dockerfile -t gcc-arm-embedded:latest -t gcc-arm-embedded:${{ matrix.compiler.name }}
 
     - name: Configure ${{ matrix.build }} example with GCC Toolchain ${{ matrix.compiler.name }} Docker
-      run: docker run -v ${PWD}/example:/builds gcc-arm-embedded-${{ matrix.compiler.name }} cmake --preset ${{ matrix.build }}
+      run: docker run -v ${PWD}/example:/builds gcc-arm-embedded cmake --preset ${{ matrix.build }}
 
     - name: Build ${{ matrix.build }} example with GCC Toolchain ${{ matrix.compiler.name }} Docker
-      run: docker run -v ${PWD}/example:/builds gcc-arm-embedded-${{ matrix.compiler.name }} cmake --build --preset ${{ matrix.build }}
+      run: docker run -v ${PWD}/example:/builds gcc-arm-embedded cmake --build --preset ${{ matrix.build }}

@@ -8,12 +8,18 @@ This Docker contains tools for cross-compilation to ARM as well as the gcc [tool
 
 ### Local
 ```
-docker build . --file 12-2-rel1/Dockerfile -t gcc-arm-embedded:latest -t gcc-arm-embedded:12-2-rel1
+docker build . --file 12.3.rel1/Dockerfile -t gcc-arm-embedded:latest -t gcc-arm-embedded:12.3.rel1
 docker run --rm -v `pwd`/example:/builds gcc-arm-embedded cmake --preset debug
 docker run --rm -v `pwd`/example:/builds gcc-arm-embedded cmake --build --preset debug
 ```
 
 ## Tag
+
+### 12.3.Rel1 (July 28, 2023)
+`arm-gnu-toolchain-12.3.rel1-x86_64-arm-none-eabi.tar.xz`
+* GCC 12.3
+* Linux x86_64 Tarball
+* SHA256: 12a2815644318ebcceaf84beabb665d0924b6e79e21048452c5331a56332b309
 
 ### 12.2.Rel1 (December 22, 2022)
 `arm-gnu-toolchain-12.2.rel1-x86_64-arm-none-eabi.tar.xz`

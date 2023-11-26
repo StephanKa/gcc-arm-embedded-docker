@@ -20,7 +20,8 @@ jobs:
                    {name: '10.3-2021.10'},
                    {name: '11.3.rel1'},
                    {name: '12.2.rel1'},
-                   {name: '12.3.rel1'}]
+                   {name: '12.3.rel1'},
+                   {name: '13.2.rel1'}]
         build: ['debug', 'release']
     steps:
     - uses: actions/checkout@v3

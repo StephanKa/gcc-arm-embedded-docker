@@ -25,7 +25,7 @@ jobs:
                    {name: '13.3.rel1'}]
         build: ['debug', 'release']
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Build ARM GCC Toolchain ${{ matrix.compiler.name }} Docker
       run: docker build . --file ${{ matrix.compiler.name }}/Dockerfile -t gcc-arm-embedded:latest -t gcc-arm-embedded:${{ matrix.compiler.name }}
 

@@ -15,6 +15,12 @@ docker run --rm -v `pwd`/example:/builds gcc-arm-embedded cmake --build --preset
 
 ## Tag
 
+### 13.3.Rel1 (July 4, 2024)
+`arm-gnu-toolchain-13.3.rel1-x86_64-arm-none-eabi.tar.xz`
+* GCC 13.3
+* Linux x86_64 Tarball
+* SHA256: 95c011cee430e64dd6087c75c800f04b9c49832cc1000127a92a97f9c8d83af4
+
 ### 13.2.Rel1 (October 30, 2023)
 `arm-gnu-toolchain-13.2.rel1-x86_64-arm-none-eabi.tar.xz`
 * GCC 13.2

@@ -5,7 +5,7 @@ on: [push]
 jobs:
   linux:
     name: GCC ARM Toolchain ${{ matrix.compiler.name }} - ${{ matrix.build }}
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false  # 'false' means Don't stop matrix workflows even if some matrix entry fails.
       matrix:
@@ -24,7 +24,8 @@ jobs:
                    {name: '13.2.rel1'},
                    {name: '13.3.rel1'},
                    {name: '14.2.rel1'},
-                   {name: '14.3.rel1'}]
+                   {name: '14.3.rel1'},
+                   {name: '15.2.rel1'}]
         build: ['debug', 'release']
     steps:
     - uses: actions/checkout@v4

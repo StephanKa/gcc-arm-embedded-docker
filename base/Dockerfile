@@ -15,6 +15,7 @@ RUN apt-get update && \
     apt-get autoremove -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /root/.cache/pip && \
+    userdel -r ubuntu 2>/dev/null || true && \
     useradd -m -u 1000 -s /bin/bash builder
 
 WORKDIR /builds

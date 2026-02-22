@@ -3,9 +3,29 @@ name: Docker Image CI
 on: [push]
 
 jobs:
+  build-base:
+    name: Build base image
+    runs-on: ubuntu-24.04
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Build base Docker image
+      run: docker build . --file base/Dockerfile -t gcc-arm-embedded-base:latest
+
+    - name: Save base Docker image
+      run: docker save gcc-arm-embedded-base:latest | gzip > /tmp/base-image.tar.gz
+
+    - name: Upload base image artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: base-image
+        path: /tmp/base-image.tar.gz
+        retention-days: 1
+
   linux:
     name: GCC ARM Toolchain ${{ matrix.compiler.name }} - ${{ matrix.build }}
     runs-on: ubuntu-24.04
+    needs: build-base
     strategy:
       fail-fast: false  # 'false' means Don't stop matrix workflows even if some matrix entry fails.
       matrix:
@@ -16,6 +36,7 @@ jobs:
                    {name: '8-2019-q3-update'},
                    {name: '9-2019-q4-major'},
                    {name: '9-2020-q2-update'},
+                   {name: '10-2020-q4-major'},
                    {name: '10.3-2021.07'},
                    {name: '10.3-2021.10'},
                    {name: '11.3.rel1'},
@@ -29,11 +50,21 @@ jobs:
         build: ['debug', 'release']
     steps:
     - uses: actions/checkout@v4
+
+    - name: Download base image artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: base-image
+        path: /tmp
+
+    - name: Load base Docker image
+      run: docker load < /tmp/base-image.tar.gz
+
     - name: Build ARM GCC Toolchain ${{ matrix.compiler.name }} Docker
       run: docker build . --file ${{ matrix.compiler.name }}/Dockerfile -t gcc-arm-embedded:latest -t gcc-arm-embedded:${{ matrix.compiler.name }}
 
     - name: Configure ${{ matrix.build }} example with GCC Toolchain ${{ matrix.compiler.name }} Docker
-      run: docker run -v ${PWD}/example:/builds gcc-arm-embedded cmake --preset ${{ matrix.build }}
+      run: docker run -u $(id -u):$(id -g) -v ${PWD}/example:/builds gcc-arm-embedded cmake --preset ${{ matrix.build }}
 
     - name: Build ${{ matrix.build }} example with GCC Toolchain ${{ matrix.compiler.name }} Docker
-      run: docker run -v ${PWD}/example:/builds gcc-arm-embedded cmake --build --preset ${{ matrix.build }}
+      run: docker run -u $(id -u):$(id -g) -v ${PWD}/example:/builds gcc-arm-embedded cmake --build --preset ${{ matrix.build }}

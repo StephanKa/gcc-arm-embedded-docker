@@ -2,16 +2,43 @@
 
 [![Docker Image CI](https://github.com/StephanKa/gcc-arm-embedded-docker/actions/workflows/docker_image.yml/badge.svg)](https://github.com/StephanKa/gcc-arm-embedded-docker/actions/workflows/docker_image.yml)
 
-This Docker contains tools for cross-compilation to ARM as well as the gcc [toolchain](https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads) and cmake. 
+This Docker contains tools for cross-compilation to ARM as well as the gcc [toolchain](https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-rm/downloads) and cmake.
+
+All images use **multistage builds** to separate the toolchain download/extraction from the final image, keeping image layers clean. Builds are non-interactive (`DEBIAN_FRONTEND=noninteractive`) and run as a non-root `builder` user (UID 1000).
+
+A shared **base image** (`gcc-arm-embedded-base`) contains all common tooling. Every version-specific image is built `FROM gcc-arm-embedded-base:latest`, so the common layer only needs to be built once.
+
+## Base Image
+
+The `base/Dockerfile` defines the shared foundation for all version-specific images. It must be built locally before building any toolchain image.
+
+```bash
+docker build . --file base/Dockerfile -t gcc-arm-embedded-base:latest
+```
+
+All version-specific images reference it as:
+```dockerfile
+FROM gcc-arm-embedded-base:latest
+```
+
+The base image is based on `ubuntu:24.04` and includes all common tooling listed in the [Additional packages](#additional-packages) section below.
 
 ## Example
 
 ### Local
-```
+```bash
+# 1. Build the shared base image (once)
+docker build . --file base/Dockerfile -t gcc-arm-embedded-base:latest
+
+# 2. Build a specific toolchain image
 docker build . --file 12.3.rel1/Dockerfile -t gcc-arm-embedded:latest -t gcc-arm-embedded:12.3.rel1
-docker run --rm -v `pwd`/example:/builds gcc-arm-embedded cmake --preset debug
-docker run --rm -v `pwd`/example:/builds gcc-arm-embedded cmake --build --preset debug
+
+# 3. Use the image
+docker run --rm -u $(id -u):$(id -g) -v `pwd`/example:/builds gcc-arm-embedded cmake --preset debug
+docker run --rm -u $(id -u):$(id -g) -v `pwd`/example:/builds gcc-arm-embedded cmake --build --preset debug
 ```
+
+> **Note:** The container runs as `builder` (UID 1000). When mounting host volumes, pass `-u $(id -u):$(id -g)` to match the host user and avoid permission issues.
 
 ## Tag
 
@@ -66,13 +93,13 @@ docker run --rm -v `pwd`/example:/builds gcc-arm-embedded cmake --build --preset
 ### Old deprecated releases
 
 ### 10.3-2021.10 (October 21, 2021)
-`gcc-arm-none-eabi-10.3-2021.07-x86_64-linux.tar.bz2`
+`gcc-arm-none-eabi-10.3-2021.10-x86_64-linux.tar.bz2`
 * GCC 10.3
 * Linux x86_64 Tarball
 * MD5: 2383e4eb4ea23f248d33adc70dc3227e
 
 ### 10.3-2021.07 (July 29, 2021)
-`gcc-arm-none-eabi-10.3-2021.10-x86_64-linux.tar.bz2`
+`gcc-arm-none-eabi-10.3-2021.07-x86_64-linux.tar.bz2`
 * GCC 10.3
 * Linux x86_64 Tarball
 * MD5: b56ae639d9183c340f065ae114a30202
@@ -123,14 +150,39 @@ docker run --rm -v `pwd`/example:/builds gcc-arm-embedded cmake --build --preset
 * MD5: 13747255194398ee08b3ba42e40e9465
 
 ## Additional packages
-* make 
-* cmake 
-* zip 
-* wget 
+
+All packages below are installed in the shared **base image** (`base/Dockerfile`) and are therefore available in every toolchain image.
+
+### Build tools
+* make
+* cmake
+* ninja-build
+* zip
+* wget
 * curl
-* git 
-* doxygen 
+* git
+
+### Documentation
+* doxygen
 * graphviz
+
+### Python
 * python3
 * python3-pip
-* ninja-build
+* python3-venv
+* pyocd *(pip)*
+* west *(pip — Zephyr RTOS meta-tool)*
+* intelhex *(pip)*
+* cmsis-pack-manager *(pip)*
+
+### LLVM / Clang (versioned, Ubuntu 24.04 default: 18)
+* clang-18
+* clang-tidy-18
+* clang-format-18
+* llvm-18
+* lld-18
+
+### Embedded debug & flash
+* gdb-multiarch
+* openocd
+* stlink-tools
